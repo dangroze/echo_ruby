@@ -7,10 +7,18 @@ RSpec.describe Echo do
       expect{echo.prompt}.to output('Say something: ').to_stdout
     end
   end
-  context '#engine' do
-    it "user can input an answer" do
+  context '#answer' do
+    it 'user can respond' do
       allow(STDIN).to receive(:gets).and_return('hello')
-      expect(echo.engine).to eq('hello')  
+      expect(echo.answer).to eq('hello')
+    end
+  end
+  context '#engine' do
+    it 'shows the converted time' do
+      time = Time.new(2018, 01, 9, 16, 26, 2, "+00:00")
+      allow(STDIN).to receive(:gets).and_return('hello')
+      allow(Time).to receive(:now).and_return(time)
+      expect(echo.engine).to eq("2018-01-09 | 16:26 | You said: hello")
     end
   end
 end
